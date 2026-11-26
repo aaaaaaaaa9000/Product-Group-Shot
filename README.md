@@ -1,20 +1,42 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# استوديو صور المنتجات
 
-# Run and deploy your AI Studio app
+تطبيق بيحوّل صور المنتجات العادية لصور احترافية باستخدام جيميناي.
 
-This contains everything you need to run your app locally.
+- **صورة لكل منتج:** ارفع كذا منتج مرة واحدة، وكل منتج يطلع في صورة لوحده (بيتولّدوا اتنين اتنين عشان مايضربش حد المفتاح).
+- **صورة جماعية:** كل المنتجات (لحد 8) في صورة واحدة مع بعض.
+- **المقاس:** مربع، طولي، ستوري، عرضي.
+- **الجودة:** عادية (حوالي 1000 بكسل، الأسرع)، عالية (2K)، فائقة (4K).
+- صورة مرجعية للستايل، تعديل الوصف، تغبيش الخلفية، وتحميل الكل في ملف مضغوط.
+- صفحة دخول عادية (بيتووردن يقدر يملاها) والجلسة بتفضل 180 يوم.
 
-View your app in AI Studio: https://ai.studio/apps/drive/10rC3XKPR6HusZaGYpc6r10rhmpt1ldwc
+مفتاح جيميناي بيفضل على السيرفر بس، ومابيوصلش للمتصفح.
 
-## Run Locally
+## المتغيرات
 
-**Prerequisites:**  Node.js
+| Variable | Default | |
+|---|---|---|
+| `GEMINI_API_KEY` | (required) | مفتاح جيميناي |
+| `GEMINI_IMAGE_MODEL` | `gemini-3.1-flash-lite-image` | موديل الجودة العادية |
+| `GEMINI_HQ_IMAGE_MODEL` | `gemini-3.1-flash-image` | موديل الجودة العالية والفائقة |
+| `GEMINI_MODEL` | `gemini-3.8-flash` | موديل تحليل صورة الستايل |
+| `APP_USERNAME` / `APP_PASSWORD` | `user` / (empty) | لو كلمة السر فاضية الدخول بيتقفل |
+| `SESSION_DAYS` | `180` | مدة الجلسة |
+| `SESSION_SECRET` | (derived) | مفتاح توقيع الجلسة (اختياري) |
+| `RATE_LIMIT_PER_MINUTE` | `30` | عدد الطلبات في الدقيقة لكل جهاز |
+| `MAX_IMAGE_MB` | `12` | أقصى حجم للصورة الواحدة |
+| `MAX_GROUP_IMAGES` | `8` | أقصى عدد منتجات في الصورة الجماعية |
+| `MAX_PROMPT_CHARS` | `4000` | أقصى طول للوصف |
+| `APP_DOMAIN` | `products.aaaaaaaaa9000.cloud` | الدومين في ترافيك |
 
+## التشغيل على الجهاز
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```bash
+npm install
+cp .env.example .env   # حط المفتاح
+npm run dev            # http://localhost:3000
+```
+
+## الرفع على السيرفر (بورتينر)
+
+ستاك من المستودع ده، فرع `main`، ملف `docker-compose.yml`، باسم `ai-app-products`،
+وحط `GEMINI_API_KEY` و `APP_PASSWORD` في متغيرات الستاك. الدومين بيشتغل لوحده بشهادة أمان.
